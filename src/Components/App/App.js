@@ -1,9 +1,10 @@
+import React from 'react';
 import Playlist from '../Playlist';
 import SearchBar from '../SearchBar';
 import SearchResults from '../SearchResults';
 import './App.css';
 
-function App() {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,6 +22,11 @@ function App() {
         {id: ''}
       ]
     }
+    this.addTrack = this.addTrack.bind(this);
+    this.removeTrack = this.removeTrack.bind(this);
+    this.updatePlaylistName = this.updatePlaylistName.bind(this);
+    this.savePlaylist = this.savePlaylist.bind(this);
+    this.search = this.search.bind(this);
   }
 
   addTrack(track) {
@@ -31,22 +37,24 @@ function App() {
     tracks.push(track)
     this.setState({playlistTracks: tracks})
   }
-
-  return (
-    <div>
-      <h1>Ja<span class="highlight">mmm</span>ing</h1>
-        <div class="App">
-          <SearchBar />
-          <div class="App-playlist">
-            <SearchResults 
-              searchResults={this.state.searchResults} />
-            <Playlist
-              playlistName={this.state.playlistName}
-              playlistTracks={this.state.playlistTracks} />
+  render() {
+    return (
+      <div>
+        <h1>Ja<span class="highlight">mmm</span>ing</h1>
+          <div class="App">
+            <SearchBar />
+            <div class="App-playlist">
+              <SearchResults 
+                searchResults={this.state.searchResults}
+                onAdd={this.addTrack} />
+              <Playlist
+                playlistName={this.state.playlistName}
+                playlistTracks={this.state.playlistTracks} />
+            </div>
           </div>
         </div>
-      </div>
-  );
+    );
+  };
 }
 
 export default App;
